@@ -2,8 +2,9 @@ package main
 
 import (
 	"log"
-	"test/config"
-	"test/game"
+
+	"github.com/probeldev/mysupergame/config"
+	"github.com/probeldev/mysupergame/game"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"

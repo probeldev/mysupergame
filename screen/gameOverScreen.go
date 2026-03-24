@@ -4,12 +4,12 @@ import (
 	"image/color"
 	"os"
 	"strconv"
-	"test/config"
-	"test/scope"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
+	"github.com/probeldev/mysupergame/config"
+	"github.com/probeldev/mysupergame/scope"
 )
 
 type gameOverScreen struct {

@@ -1,6 +1,6 @@
 package model
 
-import "test/config"
+import "github.com/probeldev/mysupergame/config"
 
 type Point struct {
 	X int

@@ -5,9 +5,10 @@ import (
 	"math"
 	"math/rand"
 	"strconv"
-	"test/config"
-	"test/model"
-	"test/scope"
+
+	"github.com/probeldev/mysupergame/config"
+	"github.com/probeldev/mysupergame/model"
+	"github.com/probeldev/mysupergame/scope"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"

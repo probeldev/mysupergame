@@ -1,4 +1,4 @@
-module test
+module github.com/probeldev/mysupergame
 
 go 1.25.5
 

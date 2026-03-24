@@ -3,11 +3,11 @@ package screen
 import (
 	"image/color"
 	"os"
-	"test/config"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/hajimehoshi/ebiten/v2/text"
+	"github.com/probeldev/mysupergame/config"
 )
 
 type startScreen struct {

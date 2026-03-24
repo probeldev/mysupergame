@@ -1,11 +1,10 @@
 package game
 
 import (
-	"test/config"
-	"test/scope"
-	"test/screen"
-
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/probeldev/mysupergame/config"
+	"github.com/probeldev/mysupergame/scope"
+	"github.com/probeldev/mysupergame/screen"
 )
 
 type CurrentScreenInterfacer interface {
