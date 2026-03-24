@@ -6,6 +6,7 @@ import (
 	"test/game"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/examples/resources/fonts" // стандартный шрифт из примеров ebiten
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/opentype"
@@ -28,10 +29,15 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	config.CoinImage, _, err = ebitenutil.NewImageFromFile("image/coin.png")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func main() {
-	ebiten.SetWindowSize(config.WindowWidth, config.WindowHeigh)
+	ebiten.SetWindowSize(config.WindowWidth, config.WindowHeight)
 	ebiten.SetWindowTitle("Hello, World!")
 	if err := ebiten.RunGame(game.NewGame()); err != nil {
 		log.Fatal(err)

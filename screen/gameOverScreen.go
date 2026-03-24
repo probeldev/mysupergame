@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"test/config"
+	"test/scope"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -13,15 +14,18 @@ import (
 
 type gameOverScreen struct {
 	gameOverMenuIndexSelected int
-	resetFunc                 func()
+	resetFunc                 func(bool)
+	scope                     *scope.Scope
 }
 
 func NewGameOverScreen(
-	resetFunc func(),
+	resetFunc func(bool),
+	scope *scope.Scope,
 ) *gameOverScreen {
 	gs := &gameOverScreen{}
 	gs.gameOverMenuIndexSelected = 0
 	gs.resetFunc = resetFunc
+	gs.scope = scope
 
 	return gs
 }
@@ -54,7 +58,7 @@ func (gs *gameOverScreen) Update() error {
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 		if gs.gameOverMenuIndexSelected == 0 {
 
-			gs.resetFunc()
+			gs.resetFunc(false)
 			return nil
 		}
 		if gs.gameOverMenuIndexSelected == 1 {
@@ -67,22 +71,21 @@ func (gs *gameOverScreen) Update() error {
 
 func (gs *gameOverScreen) Draw(
 	screen *ebiten.Image,
-	scope int,
 ) {
-	screen.Fill(color.RGBA{0x00, 0x33, 0x00, 0xFF})
+	screen.Fill(color.RGBA{0x33, 0x00, 0x00, 0xFF})
 
 	// Центрируем текст GAME OVER
 	msg := "GAME OVER"
 	bounds := text.BoundString(config.GameFont, msg)
 	x := (config.WindowWidth - bounds.Dx()) / 2
-	y := config.WindowHeigh/2 - 30
+	y := config.WindowHeight/2 - 30
 	text.Draw(screen, msg, config.GameFont, x, y, color.White)
 
 	// Score
-	scoreMsg := "Score: " + strconv.Itoa(scope)
+	scoreMsg := "Score: " + strconv.Itoa(gs.scope.Value)
 	bounds = text.BoundString(config.GameFont, scoreMsg)
 	x = (config.WindowWidth - bounds.Dx()) / 2
-	y = config.WindowHeigh / 2
+	y = config.WindowHeight / 2
 	text.Draw(screen, scoreMsg, config.GameFont, x, y, color.White)
 
 	defaultColor := color.RGBA{0x80, 0x80, 0x80, 0xFF}
