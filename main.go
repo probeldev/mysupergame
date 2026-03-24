@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	_ "embed"
 	"log"
 
 	"github.com/probeldev/mysupergame/config"
@@ -13,7 +15,8 @@ import (
 	"golang.org/x/image/font/opentype"
 )
 
-// Глобальная переменная для шрифта
+//go:embed image/coin.png
+var CoinPNG []byte
 
 func init() {
 	// Загружаем шрифт один раз при старте
@@ -31,10 +34,11 @@ func init() {
 		log.Fatal(err)
 	}
 
-	config.CoinImage, _, err = ebitenutil.NewImageFromFile("image/coin.png")
+	coinImage, _, err := ebitenutil.NewImageFromReader(bytes.NewReader(CoinPNG))
 	if err != nil {
 		log.Fatal(err)
 	}
+	config.CoinImage = coinImage
 }
 
 func main() {
