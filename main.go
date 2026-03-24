@@ -43,7 +43,7 @@ func init() {
 
 func main() {
 	ebiten.SetWindowSize(config.WindowWidth, config.WindowHeight)
-	ebiten.SetWindowTitle("Hello, World!")
+	ebiten.SetWindowTitle("My Super Game")
 	if err := ebiten.RunGame(game.NewGame()); err != nil {
 		log.Fatal(err)
 	}
