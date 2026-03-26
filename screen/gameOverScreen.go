@@ -14,17 +14,17 @@ import (
 
 type gameOverScreen struct {
 	gameOverMenuIndexSelected int
-	resetFunc                 func(bool)
+	changeScrenFunc           func(config.ScreenType)
 	scope                     *scope.Scope
 }
 
 func NewGameOverScreen(
-	resetFunc func(bool),
+	changeScreenFunc func(config.ScreenType),
 	scope *scope.Scope,
 ) *gameOverScreen {
 	gs := &gameOverScreen{}
 	gs.gameOverMenuIndexSelected = 0
-	gs.resetFunc = resetFunc
+	gs.changeScrenFunc = changeScreenFunc
 	gs.scope = scope
 
 	return gs
@@ -58,7 +58,7 @@ func (gs *gameOverScreen) Update() error {
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 		if gs.gameOverMenuIndexSelected == 0 {
 
-			gs.resetFunc(false)
+			gs.changeScrenFunc(config.ScreenTypeGame)
 			return nil
 		}
 		if gs.gameOverMenuIndexSelected == 1 {

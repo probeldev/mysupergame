@@ -23,11 +23,11 @@ type gameScreen struct {
 	Coins []model.Point
 	scope *scope.Scope
 
-	gameOverFunc func()
+	changeScreenFunc func(config.ScreenType)
 }
 
 func NewGameScreen(
-	gameOverFunc func(),
+	changeScreenFunc func(config.ScreenType),
 	scope *scope.Scope,
 ) *gameScreen {
 	gs := &gameScreen{}
@@ -38,7 +38,7 @@ func NewGameScreen(
 	gs.Point.Y = 0
 	gs.fillingMap()
 
-	gs.gameOverFunc = gameOverFunc
+	gs.changeScreenFunc = changeScreenFunc
 
 	gs.scope = scope
 	return gs
@@ -51,7 +51,7 @@ func (gs *gameScreen) Update() error {
 	}
 
 	if gs.isStopGame() {
-		gs.gameOverFunc()
+		gs.changeScreenFunc(config.ScreenTypeGameOver)
 		return nil
 	}
 

@@ -17,3 +17,11 @@ const (
 
 var GameFont font.Face
 var CoinImage *ebiten.Image
+
+type ScreenType int
+
+const (
+	ScreenTypeStart    ScreenType = 1
+	ScreenTypeGame     ScreenType = 2
+	ScreenTypeGameOver ScreenType = 3
+)

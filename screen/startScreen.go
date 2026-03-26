@@ -12,16 +12,15 @@ import (
 
 type startScreen struct {
 	startMenuIndexSelected int
-	resetFunc              func(bool)
+	changeScreenFunc       func(config.ScreenType)
 }
 
 func NewStartScreen(
-	// TODO: стоит использовать не resetFunc, а сделать отдельную функцию для запуска игры
-	resetFunc func(bool),
+	chaneScreenFunc func(config.ScreenType),
 ) *startScreen {
 	gs := &startScreen{}
 	gs.startMenuIndexSelected = 0
-	gs.resetFunc = resetFunc
+	gs.changeScreenFunc = chaneScreenFunc
 
 	return gs
 }
@@ -54,7 +53,7 @@ func (gs *startScreen) Update() error {
 	} else if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 		if gs.startMenuIndexSelected == 0 {
 
-			gs.resetFunc(false)
+			gs.changeScreenFunc(config.ScreenTypeGame)
 			return nil
 		}
 		if gs.startMenuIndexSelected == 1 {

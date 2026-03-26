@@ -13,76 +13,47 @@ type CurrentScreenInterfacer interface {
 }
 
 type Game struct {
-	Scope          scope.Scope
-	gameOver       bool
-	gameOverScreen CurrentScreenInterfacer
-	gameScreen     CurrentScreenInterfacer
-	start          bool
-	startScreen    CurrentScreenInterfacer
+	Scope         scope.Scope
+	CurrentScreen CurrentScreenInterfacer
 }
 
 func (g *Game) Update() error {
 
-	if g.gameOver {
-
-		g.gameOverScreen.Update()
-
-		return nil
-
-	}
-
-	if g.start {
-
-		g.startScreen.Update()
-
-		return nil
-
-	}
-
-	g.gameScreen.Update()
-
-	return nil
+	return g.CurrentScreen.Update()
 }
 
-func (g *Game) gameOverFunc() {
-	g.gameOver = true
-}
+func (g *Game) ChangeScreen(newScreen config.ScreenType) {
+	switch newScreen {
+	case config.ScreenTypeStart:
+		g.CurrentScreen = screen.NewStartScreen(
+			g.ChangeScreen,
+		)
+	case config.ScreenTypeGame:
+		g.Scope.Value = 0
+		g.CurrentScreen = screen.NewGameScreen(
+			g.ChangeScreen,
+			&g.Scope,
+		)
 
-func (g *Game) reset(isStartScreen bool) {
+	case config.ScreenTypeGameOver:
+		g.CurrentScreen = screen.NewGameOverScreen(
 
-	g.Scope = scope.Scope{}
-	g.gameOver = false
-	g.start = isStartScreen
-
-	g.gameOverScreen =
-		screen.NewGameOverScreen(g.reset, &g.Scope)
-
-	g.gameScreen = screen.NewGameScreen(g.gameOverFunc, &g.Scope)
-	g.startScreen = screen.NewStartScreen(g.reset)
-
+			g.ChangeScreen,
+			&g.Scope,
+		)
+	}
 }
 
 func NewGame() *Game {
 	g := Game{}
-
-	g.reset(true)
+	g.Scope = scope.Scope{}
+	g.ChangeScreen(config.ScreenTypeStart)
 
 	return &g
 }
 
 func (g *Game) Draw(screenH *ebiten.Image) {
-	if g.start {
-		g.startScreen.Draw(screenH)
-		return
-	}
-
-	if g.gameOver {
-		g.gameOverScreen.Draw(screenH)
-		return
-	}
-
-	g.gameScreen.Draw(screenH)
-
+	g.CurrentScreen.Draw(screenH)
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
