@@ -185,6 +185,13 @@ func (gs *gameScreen) addRandomCoin() {
 		return
 	}
 
+	for _, coin := range gs.Coins {
+		if coin.X == x && coin.Y == y {
+			gs.addRandomCoin()
+			return
+		}
+	}
+
 	gs.Coins = append(gs.Coins, model.Point{X: x, Y: y})
 }
 
